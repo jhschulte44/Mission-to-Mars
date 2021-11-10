@@ -112,27 +112,28 @@ def mars_hemispheres(browser):
     # Retreive the hemisphere elements
     hems = mars_soup.find_all('div', class_='description')
     i = 0
-    for hem in hems:
-        try:
-            hemispheres = {}
-            # clink each hemisphere link
-            browser.find_by_tag('h3')[i].click()
-            hem_soup = soup(browser.html, 'html.parser')
-            # find imgage url and append hemisphere dictionary
-            rel_url = hem_soup.find('img', class_='wide-image').get('src')
-            img_url = str(rel_url)
-            # find image title and append dictionary
-            title = str(hem_soup.find('h2').text)
-            hemispheres = {"img_url": f"https://marshemispheres.com/{img_url}",
-                            "title": title}
-            hemisphere_image_urls.append(hemispheres)
-            browser.back()
-            i += 1
+    try:
+        for hem in hems:
+                
+                hemispheres = {}
+                # clink each hemisphere link
+                browser.find_by_tag('h3')[i].click()
+                hem_soup = soup(browser.html, 'html.parser')
+                # find imgage url and append hemisphere dictionary
+                rel_url = hem_soup.find('img', class_='wide-image').get('src')
+                img_url = str(rel_url)
+                # find image title and append dictionary
+                title = str(hem_soup.find('h2').text)
+                hemispheres = {"img_url": f"https://marshemispheres.com/{img_url}",
+                                "title": title}
+                hemisphere_image_urls.append(hemispheres)
+                browser.back()
+                i += 1
         
-        except BaseException:
-            return None
+    except BaseException:
+        return None
         
-        return hemisphere_image_urls
+    return hemisphere_image_urls
 
 
 if __name__ == "__main__":
